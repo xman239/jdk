@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 1998, 2021, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 1998, 2022, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -128,6 +128,7 @@ import javax.swing.text.View;
  *
  * @author  Timothy Prinzing
  * @author  Scott Violet
+ * @author  Guy Abossolo Foh - ScientificWare
  * @see StyleSheet
  */
 @SuppressWarnings("serial") // Same-version serialization only
@@ -1391,57 +1392,318 @@ public class CSS implements Serializable {
      * or "rgba(r, g, b, a)" to a Color.
      */
     static Color stringToColor(String str) {
-      Color color;
+        Color color;
 
-      if (str == null) {
-          return null;
-      }
-      if (str.length() == 0)
-        color = Color.black;
-      else if (str.startsWith("rgb(")) {
-          color = parseRGB(str);
-      } else if (str.startsWith("rgba(")) {
-          color = parseRGBA(str);
-      }
-      else if (str.charAt(0) == '#')
-        color = hexToColor(str);
-      else if (str.equalsIgnoreCase("Black"))
-        color = hexToColor("#000000");
-      else if(str.equalsIgnoreCase("Silver"))
-        color = hexToColor("#C0C0C0");
-      else if(str.equalsIgnoreCase("Gray"))
-        color = hexToColor("#808080");
-      else if(str.equalsIgnoreCase("White"))
-        color = hexToColor("#FFFFFF");
-      else if(str.equalsIgnoreCase("Maroon"))
-        color = hexToColor("#800000");
-      else if(str.equalsIgnoreCase("Red"))
-        color = hexToColor("#FF0000");
-      else if(str.equalsIgnoreCase("Purple"))
-        color = hexToColor("#800080");
-      else if(str.equalsIgnoreCase("Fuchsia"))
-        color = hexToColor("#FF00FF");
-      else if(str.equalsIgnoreCase("Green"))
-        color = hexToColor("#008000");
-      else if(str.equalsIgnoreCase("Lime"))
-        color = hexToColor("#00FF00");
-      else if(str.equalsIgnoreCase("Olive"))
-        color = hexToColor("#808000");
-      else if(str.equalsIgnoreCase("Yellow"))
-        color = hexToColor("#FFFF00");
-      else if(str.equalsIgnoreCase("Navy"))
-        color = hexToColor("#000080");
-      else if(str.equalsIgnoreCase("Blue"))
-        color = hexToColor("#0000FF");
-      else if(str.equalsIgnoreCase("Teal"))
-        color = hexToColor("#008080");
-      else if(str.equalsIgnoreCase("Aqua"))
-        color = hexToColor("#00FFFF");
-      else if(str.equalsIgnoreCase("Orange"))
-        color = hexToColor("#FF8000");
-      else
-          color = hexToColor(str); // sometimes get specified without leading #
-      return color;
+        if (str == null) {
+            return null;
+        }
+        if (str.length() == 0)
+            color = Color.black;
+        else if (str.startsWith("rgb("))
+            color = parseRGB(str);
+        else if (str.startsWith("rgba("))
+            color = parseRGBA(str);
+        else if (str.charAt(0) == '#')
+            color = hexToColor(str);
+        else if (str.equalsIgnoreCase("Black"))
+            color = hexToColor("#000000");
+        else if(str.equalsIgnoreCase("Silver"))
+            color = hexToColor("#C0C0C0");
+        else if(str.equalsIgnoreCase("Gray"))
+            color = hexToColor("#808080");
+        else if(str.equalsIgnoreCase("White"))
+            color = hexToColor("#FFFFFF");
+        else if(str.equalsIgnoreCase("Maroon"))
+            color = hexToColor("#800000");
+        else if(str.equalsIgnoreCase("Red"))
+            color = hexToColor("#FF0000");
+        else if(str.equalsIgnoreCase("Purple"))
+            color = hexToColor("#800080");
+        else if(str.equalsIgnoreCase("Fuchsia"))
+            color = hexToColor("#FF00FF");
+        else if(str.equalsIgnoreCase("Green"))
+            color = hexToColor("#008000");
+        else if(str.equalsIgnoreCase("Lime"))
+            color = hexToColor("#00FF00");
+        else if(str.equalsIgnoreCase("Olive"))
+            color = hexToColor("#808000");
+        else if(str.equalsIgnoreCase("Yellow"))
+            color = hexToColor("#FFFF00");
+        else if(str.equalsIgnoreCase("Navy"))
+            color = hexToColor("#000080");
+        else if(str.equalsIgnoreCase("Blue"))
+            color = hexToColor("#0000FF");
+        else if(str.equalsIgnoreCase("Teal"))
+            color = hexToColor("#008080");
+        else if(str.equalsIgnoreCase("Aqua"))
+            color = hexToColor("#00FFFF");
+        else if(str.equalsIgnoreCase("Orange"))
+            color = hexToColor("#FF8000");
+        else if (str.equalsIgnoreCase("Aliceblue"))
+            color = hexToColor("#f0f8ff");
+        else if (str.equalsIgnoreCase("Antiquewhite"))
+            color = hexToColor("#faebd7");
+        else if (str.equalsIgnoreCase("Aquamarine"))
+            color = hexToColor("#7fffd4");
+        else if (str.equalsIgnoreCase("Azure"))
+            color = hexToColor("#f0ffff");
+        else if (str.equalsIgnoreCase("Beige"))
+            color = hexToColor("#f5f5dc");
+        else if (str.equalsIgnoreCase("Bisque"))
+            color = hexToColor("#ffe4c4");
+        else if (str.equalsIgnoreCase("Blanchedalmond"))
+            color = hexToColor("#ffebcd");
+        else if (str.equalsIgnoreCase("Blueviolet"))
+            color = hexToColor("#8a2be2");
+        else if (str.equalsIgnoreCase("Brown"))
+            color = hexToColor("#a52a2a");
+        else if (str.equalsIgnoreCase("Burlywood"))
+            color = hexToColor("#deb887");
+        else if (str.equalsIgnoreCase("Cadetblue"))
+            color = hexToColor("#5f9ea0");
+        else if (str.equalsIgnoreCase("Chartreuse"))
+            color = hexToColor("#7fff00");
+        else if (str.equalsIgnoreCase("Chocolate"))
+            color = hexToColor("#d2691e");
+        else if (str.equalsIgnoreCase("Coral"))
+            color = hexToColor("#ff7f50");
+        else if (str.equalsIgnoreCase("Cornflowerblue"))
+            color = hexToColor("#6495ed");
+        else if (str.equalsIgnoreCase("Cornsilk"))
+            color = hexToColor("#fff8dc");
+        else if (str.equalsIgnoreCase("Crimson"))
+            color = hexToColor("#dc143c");
+        else if (str.equalsIgnoreCase("Cyan"))
+            color = hexToColor("#00ffff");
+        else if (str.equalsIgnoreCase("Darkblue"))
+            color = hexToColor("#00008b");
+        else if (str.equalsIgnoreCase("Darkcyan"))
+            color = hexToColor("#008b8b");
+        else if (str.equalsIgnoreCase("Darkgoldenrod"))
+            color = hexToColor("#b8860b");
+        else if (str.equalsIgnoreCase("Darkgray"))
+            color = hexToColor("#a9a9a9");
+        else if (str.equalsIgnoreCase("Darkgreen"))
+            color = hexToColor("#006400");
+        else if (str.equalsIgnoreCase("Darkgrey"))
+            color = hexToColor("#a9a9a9");
+        else if (str.equalsIgnoreCase("Darkkhaki"))
+            color = hexToColor("#bdb76b");
+        else if (str.equalsIgnoreCase("Darkmagenta"))
+            color = hexToColor("#8b008b");
+        else if (str.equalsIgnoreCase("Darkolivegreen"))
+            color = hexToColor("#556b2f");
+        else if (str.equalsIgnoreCase("Darkorange"))
+            color = hexToColor("#ff8c00");
+        else if (str.equalsIgnoreCase("Darkorchid"))
+            color = hexToColor("#9932cc");
+        else if (str.equalsIgnoreCase("Darkred"))
+            color = hexToColor("#8b0000");
+        else if (str.equalsIgnoreCase("Darksalmon"))
+            color = hexToColor("#e9967a");
+        else if (str.equalsIgnoreCase("Darkseagreen"))
+            color = hexToColor("#8fbc8f");
+        else if (str.equalsIgnoreCase("Darkslateblue"))
+            color = hexToColor("#483d8b");
+        else if (str.equalsIgnoreCase("Darkslategray"))
+            color = hexToColor("#2f4f4f");
+        else if (str.equalsIgnoreCase("Darkslategrey"))
+            color = hexToColor("#2f4f4f");
+        else if (str.equalsIgnoreCase("Darkturquoise"))
+            color = hexToColor("#00ced1");
+        else if (str.equalsIgnoreCase("Darkviolet"))
+            color = hexToColor("#9400d3");
+        else if (str.equalsIgnoreCase("Deeppink"))
+            color = hexToColor("#ff1493");
+        else if (str.equalsIgnoreCase("Deepskyblue"))
+            color = hexToColor("#00bfff");
+        else if (str.equalsIgnoreCase("Dimgray"))
+            color = hexToColor("#696969");
+        else if (str.equalsIgnoreCase("Dimgrey"))
+            color = hexToColor("#696969");
+        else if (str.equalsIgnoreCase("Dodgerblue"))
+            color = hexToColor("#1e90ff");
+        else if (str.equalsIgnoreCase("Firebrick"))
+            color = hexToColor("#b22222");
+        else if (str.equalsIgnoreCase("Floralwhite"))
+            color = hexToColor("#fffaf0");
+        else if (str.equalsIgnoreCase("Forestgreen"))
+            color = hexToColor("#228b22");
+        else if (str.equalsIgnoreCase("Gainsboro"))
+            color = hexToColor("#dcdcdc");
+        else if (str.equalsIgnoreCase("Ghostwhite"))
+            color = hexToColor("#f8f8ff");
+        else if (str.equalsIgnoreCase("Gold"))
+            color = hexToColor("#ffd700");
+        else if (str.equalsIgnoreCase("Goldenrod"))
+            color = hexToColor("#daa520");
+        else if (str.equalsIgnoreCase("Greenyellow"))
+            color = hexToColor("#adff2f");
+        else if (str.equalsIgnoreCase("Grey"))
+            color = hexToColor("#808080");
+        else if (str.equalsIgnoreCase("Honeydew"))
+            color = hexToColor("#f0fff0");
+        else if (str.equalsIgnoreCase("Hotpink"))
+            color = hexToColor("#ff69b4");
+        else if (str.equalsIgnoreCase("Indianred"))
+            color = hexToColor("#cd5c5c");
+        else if (str.equalsIgnoreCase("Indigo"))
+            color = hexToColor("#4b0082");
+        else if (str.equalsIgnoreCase("Ivory"))
+            color = hexToColor("#fffff0");
+        else if (str.equalsIgnoreCase("Khaki"))
+            color = hexToColor("#f0e68c");
+        else if (str.equalsIgnoreCase("Lavender"))
+            color = hexToColor("#e6e6fa");
+        else if (str.equalsIgnoreCase("Lavenderblush"))
+            color = hexToColor("#fff0f5");
+        else if (str.equalsIgnoreCase("Lawngreen"))
+            color = hexToColor("#7cfc00");
+        else if (str.equalsIgnoreCase("Lemonchiffon"))
+            color = hexToColor("#fffacd");
+        else if (str.equalsIgnoreCase("Lightblue"))
+            color = hexToColor("#add8e6");
+        else if (str.equalsIgnoreCase("Lightcoral"))
+            color = hexToColor("#f08080");
+        else if (str.equalsIgnoreCase("Lightcyan"))
+            color = hexToColor("#e0ffff");
+        else if (str.equalsIgnoreCase("Lightgoldenrodyellow"))
+            color = hexToColor("#fafad2");
+        else if (str.equalsIgnoreCase("Lightgray"))
+            color = hexToColor("#d3d3d3");
+        else if (str.equalsIgnoreCase("Lightgreen"))
+            color = hexToColor("#90ee90");
+        else if (str.equalsIgnoreCase("Lightgrey"))
+            color = hexToColor("#d3d3d3");
+        else if (str.equalsIgnoreCase("Lightpink"))
+            color = hexToColor("#ffb6c1");
+        else if (str.equalsIgnoreCase("Lightsalmon"))
+            color = hexToColor("#ffa07a");
+        else if (str.equalsIgnoreCase("Lightseagreen"))
+            color = hexToColor("#20b2aa");
+        else if (str.equalsIgnoreCase("Lightskyblue"))
+            color = hexToColor("#87cefa");
+        else if (str.equalsIgnoreCase("Lightslategray"))
+            color = hexToColor("#778899");
+        else if (str.equalsIgnoreCase("Lightslategrey"))
+            color = hexToColor("#778899");
+        else if (str.equalsIgnoreCase("Lightsteelblue"))
+            color = hexToColor("#b0c4de");
+        else if (str.equalsIgnoreCase("Lightyellow"))
+            color = hexToColor("#ffffe0");
+        else if (str.equalsIgnoreCase("Limegreen"))
+            color = hexToColor("#32cd32");
+        else if (str.equalsIgnoreCase("Linen"))
+            color = hexToColor("#faf0e6");
+        else if (str.equalsIgnoreCase("Magenta"))
+            color = hexToColor("#ff00ff");
+        else if (str.equalsIgnoreCase("Mediumaquamarine"))
+            color = hexToColor("#66cdaa");
+        else if (str.equalsIgnoreCase("Mediumblue"))
+            color = hexToColor("#0000cd");
+        else if (str.equalsIgnoreCase("Mediumorchid"))
+            color = hexToColor("#ba55d3");
+        else if (str.equalsIgnoreCase("Mediumpurple"))
+            color = hexToColor("#9370db");
+        else if (str.equalsIgnoreCase("Mediumseagreen"))
+            color = hexToColor("#3cb371");
+        else if (str.equalsIgnoreCase("Mediumslateblue"))
+            color = hexToColor("#7b68ee");
+        else if (str.equalsIgnoreCase("Mediumspringgreen"))
+            color = hexToColor("#00fa9a");
+        else if (str.equalsIgnoreCase("Mediumturquoise"))
+            color = hexToColor("#48d1cc");
+        else if (str.equalsIgnoreCase("Mediumvioletred"))
+            color = hexToColor("#c71585");
+        else if (str.equalsIgnoreCase("Midnightblue"))
+            color = hexToColor("#191970");
+        else if (str.equalsIgnoreCase("Mintcream"))
+            color = hexToColor("#f5fffa");
+        else if (str.equalsIgnoreCase("Mistyrose"))
+            color = hexToColor("#ffe4e1");
+        else if (str.equalsIgnoreCase("Moccasin"))
+            color = hexToColor("#ffe4b5");
+        else if (str.equalsIgnoreCase("Navajowhite"))
+            color = hexToColor("#ffdead");
+        else if (str.equalsIgnoreCase("Oldlace"))
+            color = hexToColor("#fdf5e6");
+        else if (str.equalsIgnoreCase("Olivedrab"))
+            color = hexToColor("#6b8e23");
+        else if (str.equalsIgnoreCase("Orangered"))
+            color = hexToColor("#ff4500");
+        else if (str.equalsIgnoreCase("Orchid"))
+            color = hexToColor("#da70d6");
+        else if (str.equalsIgnoreCase("Palegoldenrod"))
+            color = hexToColor("#eee8aa");
+        else if (str.equalsIgnoreCase("Palegreen"))
+            color = hexToColor("#98fb98");
+        else if (str.equalsIgnoreCase("Paleturquoise"))
+            color = hexToColor("#afeeee");
+        else if (str.equalsIgnoreCase("Palevioletred"))
+            color = hexToColor("#db7093");
+        else if (str.equalsIgnoreCase("Papayawhip"))
+            color = hexToColor("#ffefd5");
+        else if (str.equalsIgnoreCase("Peachpuff"))
+            color = hexToColor("#ffdab9");
+        else if (str.equalsIgnoreCase("Peru"))
+            color = hexToColor("#cd853f");
+        else if (str.equalsIgnoreCase("Pink"))
+            color = hexToColor("#ffc0cb");
+        else if (str.equalsIgnoreCase("Plum"))
+            color = hexToColor("#dda0dd");
+        else if (str.equalsIgnoreCase("Powderblue"))
+            color = hexToColor("#b0e0e6");
+        else if (str.equalsIgnoreCase("Rebeccapurple"))
+            color = hexToColor("#663399");
+        else if (str.equalsIgnoreCase("Rosybrown"))
+            color = hexToColor("#bc8f8f");
+        else if (str.equalsIgnoreCase("Royalblue"))
+            color = hexToColor("#4169e1");
+        else if (str.equalsIgnoreCase("Saddlebrown"))
+            color = hexToColor("#8b4513");
+        else if (str.equalsIgnoreCase("Salmon"))
+            color = hexToColor("#fa8072");
+        else if (str.equalsIgnoreCase("Sandybrown"))
+            color = hexToColor("#f4a460");
+        else if (str.equalsIgnoreCase("Seagreen"))
+            color = hexToColor("#2e8b57");
+        else if (str.equalsIgnoreCase("Seashell"))
+            color = hexToColor("#fff5ee");
+        else if (str.equalsIgnoreCase("Sienna"))
+            color = hexToColor("#a0522d");
+        else if (str.equalsIgnoreCase("Skyblue"))
+            color = hexToColor("#87ceeb");
+        else if (str.equalsIgnoreCase("Slateblue"))
+            color = hexToColor("#6a5acd");
+        else if (str.equalsIgnoreCase("Slategray"))
+            color = hexToColor("#708090");
+        else if (str.equalsIgnoreCase("Slategrey"))
+            color = hexToColor("#708090");
+        else if (str.equalsIgnoreCase("Snow"))
+            color = hexToColor("#fffafa");
+        else if (str.equalsIgnoreCase("Springgreen"))
+            color = hexToColor("#00ff7f");
+        else if (str.equalsIgnoreCase("Steelblue"))
+            color = hexToColor("#4682b4");
+        else if (str.equalsIgnoreCase("Tan"))
+            color = hexToColor("#d2b48c");
+        else if (str.equalsIgnoreCase("Thistle"))
+            color = hexToColor("#d8bfd8");
+        else if (str.equalsIgnoreCase("Tomato"))
+            color = hexToColor("#ff6347");
+        else if (str.equalsIgnoreCase("Turquoise"))
+            color = hexToColor("#40e0d0");
+        else if (str.equalsIgnoreCase("Violet"))
+            color = hexToColor("#ee82ee");
+        else if (str.equalsIgnoreCase("Wheat"))
+            color = hexToColor("#f5deb3");
+        else if (str.equalsIgnoreCase("Whitesmoke"))
+            color = hexToColor("#f5f5f5");
+        else if (str.equalsIgnoreCase("Yellowgreen"))
+            color = hexToColor("#9acd32");
+        else
+            color = hexToColor(str); // sometimes get specified without leading #
+        return color;
     }
 
     /**
