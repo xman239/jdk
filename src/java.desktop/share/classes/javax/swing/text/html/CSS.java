@@ -1411,7 +1411,7 @@ public class CSS implements Serializable {
         return color;
     }
 
-    private static TreeMap<String, Color> colorNamed = new TreeMap<String, Color>(
+    private static Map<String, Color> colorNamed =
         Map.ofEntries(
             Map.entry("aliceblue", new Color(240, 248, 255)),
             Map.entry("antiquewhite", new Color(250, 235, 215)),
@@ -1561,8 +1561,7 @@ public class CSS implements Serializable {
             Map.entry("whitesmoke", new Color(245, 245, 245)),
             Map.entry("yellow", new Color(255, 255, 0)),
             Map.entry("yellowgreen", new Color(154, 205, 50))
-        )
-    );
+        );
 
     /**
      * Parses a String in the format <code>rgb(r, g, b)</code> where
