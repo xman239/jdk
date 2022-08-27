@@ -43,12 +43,12 @@ public class JDK8292276MissingColorNamesInCSS {
     // Cyan name, as most color names Colors defined in CSS Color Module
     // Level 4, is not referenced in CSS.java.
     // This test fails, if getAttribute doesn't return a cyan Color Object.
-    // When a color name is missing getAttribute returns a black Color Object. 
+    // When a color name is missing getAttribute returns a black Color Object.
     public static void main(String[] args) {
         StyleSheet styleSheet = new StyleSheet();
         AttributeSet attributeSet = styleSheet.getDeclaration("color: cyan;");
         Object color = attributeSet.getAttribute(COLOR);
-        if (!color.toString().equals("cyan")){
+        if (!color.toString().equals("cyan")) {
             throw new RuntimeException("Failed");
         }
     }
