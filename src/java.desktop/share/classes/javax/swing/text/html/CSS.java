@@ -40,7 +40,6 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Locale;
 import java.util.Map;
-import java.util.TreeMap;
 
 import javax.swing.ImageIcon;
 import javax.swing.SizeRequirements;
@@ -1398,7 +1397,7 @@ public class CSS implements Serializable {
         String strlc = str.toLowerCase(Locale.ROOT);
         if (str == null) {
             return null;
-        } else if (str.length() == 0) {
+        } else if (str.isEmpty()) {
             return Color.black;
         } else if (strlc.startsWith("rgb(")) {
             return parseRGB(str);
