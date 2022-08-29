@@ -31,25 +31,63 @@
  * @author Guy Abossolo Foh - ScientificWare
  */
 
+import java.awt.Color;
+
 import javax.swing.text.AttributeSet;
 import javax.swing.text.html.StyleSheet;
+import java.util.Locale;
 
 import static javax.swing.text.html.CSS.Attribute.COLOR;
+import static javax.swing.text.html.CSS.Attribute.BORDER_LEFT_COLOR;
+import static javax.swing.text.html.CSS.Attribute.BORDER_RIGHT_COLOR;
 
 public class JDK8292276MissingColorNamesInCSS {
 
-    // Cyan is the missing color name that originates the PR JDK8292276 :
-    // Missing Color NamesIn CSS.
-    // Cyan name, as most color names Colors defined in CSS Color Module
-    // Level 4, is not referenced in CSS.java.
-    // This test fails, if getAttribute doesn't return a cyan Color Object.
-    // When a color name is missing getAttribute returns a black Color Object.
+    // The CSS 'color' property accepts <name-color>, 'transparent' keyword <rgb()>, <rgba> values.
+    // - 'cyan' is the missing <name-color> keyword that originates the PR JDK8292276 :
+    //   Missing Color Names In CSS.
+    //   'cyan' keyword, as 130 <name-color> keywords defined in CSS Color Module
+    //   Level 4, is not referenced in CSS.java.
+    // - sRGB colors defined by rgb and rgba functions must be case insensitive.
+    // - 'transparent' keyword is the missing.
+    //
+    // This test fails, if getAttribute :
+    // - doesn't return cyan value.
+    //   - When a <color-name> keyword is missing, getAttribute returns a black Color Object.
+    // - returns null when <rgb()> and <rgba()> values are not treated as being all lowercase.
+    //   - When <rgb()> and <rgba()> values contains at least an uppercase character, getAttribute returns null.
+    // - returns null when using 'transparent' keyword.
     public static void main(String[] args) {
+        StringBuilder result = new StringBuilder("Failed.");
+        boolean passed = true;
         StyleSheet styleSheet = new StyleSheet();
-        AttributeSet attributeSet = styleSheet.getDeclaration("color: cyan;");
-        Object color = attributeSet.getAttribute(COLOR);
-        if (!color.toString().equals("cyan")) {
-            throw new RuntimeException("Failed");
+        AttributeSet attributeSet;
+        Object color;
+        Object bdleftcolor;
+        Object bdrightcolor;
+        attributeSet = styleSheet.getDeclaration("""
+            color: cyan;
+            border-left-color : Rgb(250 210 120);
+            border-right-color: transparent;
+            """);
+        color = attributeSet.getAttribute(COLOR);
+        bdleftcolor = attributeSet.getAttribute(BORDER_LEFT_COLOR);
+        bdrightcolor = attributeSet.getAttribute(BORDER_RIGHT_COLOR);
+
+        if (!color.toString().toLowerCase(Locale.ROOT).equals("cyan")) {
+            passed = false;
+            result.append(" [<name-color> keyword(s) missing]");
+        }
+        if (bdrightcolor == null) {
+            passed = false;
+            result.append(" ['transparent' keyword missing]");
+        }
+        if (bdleftcolor == null) {
+            passed = false;
+            result.append(" [<rgb> or <rgba> values not case insensitive]");
+        }
+        if (!passed) {
+            throw new RuntimeException(result.toString());
         }
     }
 }
