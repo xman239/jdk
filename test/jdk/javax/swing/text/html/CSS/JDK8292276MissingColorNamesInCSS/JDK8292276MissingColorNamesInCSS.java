@@ -75,7 +75,7 @@ public class JDK8292276MissingColorNamesInCSS {
         color = attributeSet.getAttribute(COLOR);
         bdleftcolor = attributeSet.getAttribute(BORDER_LEFT_COLOR);
         bdrightcolor = attributeSet.getAttribute(BORDER_RIGHT_COLOR);
-        
+
         if(styleSheet.stringToColor(null) != null){
             passed = false;
             result.append(" [stringToColor(null) must return null]");
