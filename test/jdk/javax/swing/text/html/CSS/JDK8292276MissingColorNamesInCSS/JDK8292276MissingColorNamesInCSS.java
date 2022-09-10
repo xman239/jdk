@@ -52,7 +52,7 @@ public class JDK8292276MissingColorNamesInCSS {
     // - 'transparent' keyword is the missing.
     //
     // This test fails,
-    // - if stringToColor(null) returns null
+    // - if stringToColor(null) doesn't return null
     // - if getAttribute :
     //   - doesn't return cyan value.
     //     - When a <color-name> keyword is missing, getAttribute returns a black Color Object.
