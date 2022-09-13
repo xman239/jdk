@@ -23,14 +23,12 @@
  * questions.
  */
 
-/*
+ /*
  * @test
  * @bug 8292276
  * @summary Missing Color Names in CSS
- * @run main JDK8292276MissingColorNamesInCSS
- * @author Guy Abossolo Foh - ScientificWare
+ * @run main MissingColorNames
  */
-
 import java.awt.Color;
 
 import javax.swing.text.AttributeSet;
@@ -41,7 +39,7 @@ import static javax.swing.text.html.CSS.Attribute.COLOR;
 import static javax.swing.text.html.CSS.Attribute.BORDER_LEFT_COLOR;
 import static javax.swing.text.html.CSS.Attribute.BORDER_RIGHT_COLOR;
 
-public class JDK8292276MissingColorNamesInCSS {
+public class MissingColorNames {
 
     // The CSS 'color' property accepts <name-color>, 'transparent' keyword <rgb()>, <rgba> values.
     // - 'cyan' is the missing <name-color> keyword that originates the PR JDK8292276 :
@@ -49,7 +47,7 @@ public class JDK8292276MissingColorNamesInCSS {
     //   'cyan' keyword, as 131 <name-color> keywords also defined in CSS Color Module
     //   Level 4, are not referenced in CSS.java.
     // - sRGB colors defined by rgb and rgba functions must be case insensitive.
-    // - 'transparent' keyword is the missing.
+    // - 'transparent' keyword is missing.
     //
     // This test fails,
     // - if stringToColor(null) doesn't return null
@@ -63,20 +61,16 @@ public class JDK8292276MissingColorNamesInCSS {
         StringBuilder result = new StringBuilder("Failed.");
         boolean passed = true;
         StyleSheet styleSheet = new StyleSheet();
-        AttributeSet attributeSet;
-        Object color;
-        Object bdleftcolor;
-        Object bdrightcolor;
-        attributeSet = styleSheet.getDeclaration("""
+        AttributeSet attributeSet = styleSheet.getDeclaration("""
             color: cyan;
             border-left-color : Rgb(250 210 120);
             border-right-color: transparent;
             """);
-        color = attributeSet.getAttribute(COLOR);
-        bdleftcolor = attributeSet.getAttribute(BORDER_LEFT_COLOR);
-        bdrightcolor = attributeSet.getAttribute(BORDER_RIGHT_COLOR);
+        Object color = attributeSet.getAttribute(COLOR);
+        Object leftColor = attributeSet.getAttribute(BORDER_LEFT_COLOR);
+        Object rightColor = attributeSet.getAttribute(BORDER_RIGHT_COLOR);
 
-        if (styleSheet.stringToColor(null) != null){
+        if (styleSheet.stringToColor(null) != null) {
             passed = false;
             result.append(" [stringToColor(null) must return null]");
         }
@@ -84,11 +78,11 @@ public class JDK8292276MissingColorNamesInCSS {
             passed = false;
             result.append(" [<name-color> keyword(s) missing]");
         }
-        if (bdrightcolor == null) {
+        if (rightColor == null) {
             passed = false;
             result.append(" ['transparent' keyword missing]");
         }
-        if (bdleftcolor == null) {
+        if (leftColor == null) {
             passed = false;
             result.append(" [<rgb> or <rgba> values not case insensitive]");
         }
