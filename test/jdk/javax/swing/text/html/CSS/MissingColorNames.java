@@ -41,12 +41,9 @@ import static javax.swing.text.html.CSS.Attribute.BORDER_RIGHT_COLOR;
 
 public class MissingColorNames {
 
-    // The CSS 'color' property accepts <name-color>, 'transparent' keyword <rgb()>, <rgba> values.
-    // - 'cyan' is the missing <name-color> keyword that originates the PR JDK8292276 :
-    //   Missing Color Names In CSS.
-    //   'cyan' keyword, as 131 <name-color> keywords also defined in CSS Color Module
-    //   Level 4, are not referenced in CSS.java.
-    // - sRGB colors defined by rgb and rgba functions must be case insensitive.
+    // The CSS 'color' property accepts <name-color>, 'transparent' keyword, <rgb()>, <rgba()> values.
+    // - 'cyan' is one of the missing keywords which are defined in CSS Color Module Level 4.
+    // - sRGB colors defined by 'rgb()' and 'rgba()' functions must be case insensitive.
     // - 'transparent' keyword is missing.
     //
     // This test fails,
@@ -74,7 +71,7 @@ public class MissingColorNames {
             passed = false;
             result.append(" [stringToColor(null) must return null]");
         }
-        if (!color.toString().toLowerCase(Locale.ROOT).equals("cyan")) {
+        if (!color.toString().equals("cyan")) {
             passed = false;
             result.append(" [<name-color> keyword(s) missing]");
         }
@@ -84,7 +81,7 @@ public class MissingColorNames {
         }
         if (leftColor == null) {
             passed = false;
-            result.append(" [<rgb> or <rgba> values not case insensitive]");
+            result.append(" [<rgb()> or <rgba()> values not case insensitive]");
         }
         if (!passed) {
             throw new RuntimeException(result.toString());
