@@ -1403,7 +1403,7 @@ public class CSS implements Serializable {
             return parseRGB(str);
         } else if (strlc.startsWith("rgba(")) {
             return parseRGBA(str);
-        } else if (str.charAt(0) == '#') {
+        } else if (strlc.charAt(0) == '#') {
             return hexToColor(str);
         } else {
             Color color = colorNames.get(strlc);
