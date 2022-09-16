@@ -23,7 +23,7 @@
  * questions.
  */
 
- /*
+/*
  * @test
  * @bug 8292276
  * @summary Missing Color Names in CSS
