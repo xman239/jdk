@@ -2105,12 +2105,11 @@ void JavaThread::pretouch_stack() {
     address here = (address) &p1;
     if (is_in_full_stack(here) && here > end) {
       size_t to_alloc = here - end;
-      log_trace(os, thread)("Pretouching thread stack from " PTR_FORMAT " to " PTR_FORMAT ".",
-                            p2i(here), p2i(end));
       volatile char* p2 = (char*) alloca(to_alloc);
-      for (size_t i = 0; i < to_alloc; i += os::vm_page_size()) {
-        p2[i] = 'A';
-      }
+      log_trace(os, thread)("Pretouching thread stack from " PTR_FORMAT " to " PTR_FORMAT ".",
+                            p2i(p2), p2i(end));
+      os::pretouch_memory((void*)p2, (void*)(p2 + to_alloc),
+                          NOT_AIX(os::vm_page_size()) AIX_ONLY(4096));
     }
   }
 }
