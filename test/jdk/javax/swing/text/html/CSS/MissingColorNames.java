@@ -28,10 +28,10 @@
  * @run main MissingColorNames
  */
 import java.awt.Color;
+import java.util.Locale;
 
 import javax.swing.text.AttributeSet;
 import javax.swing.text.html.StyleSheet;
-import java.util.Locale;
 
 import static javax.swing.text.html.CSS.Attribute.COLOR;
 import static javax.swing.text.html.CSS.Attribute.BORDER_LEFT_COLOR;
@@ -39,19 +39,6 @@ import static javax.swing.text.html.CSS.Attribute.BORDER_RIGHT_COLOR;
 
 public class MissingColorNames {
 
-    // The CSS 'color' property accepts <name-color>, 'transparent' keyword, <rgb()>, <rgba()> values.
-    // - 'cyan' is one of the missing keywords which are defined in CSS Color Module Level 4.
-    // - sRGB colors defined by 'rgb()' and 'rgba()' functions must be case insensitive.
-    // - 'transparent' keyword is missing.
-    //
-    // This test fails,
-    // - if stringToColor(null) doesn't return null
-    // - if getAttribute :
-    //   - doesn't return cyan value.
-    //     - When a <color-name> keyword is missing, getAttribute returns a black Color Object.
-    //   - returns null when <rgb()> and <rgba()> values are not treated as being all lowercase.
-    //     - When <rgb()> and <rgba()> values contains at least an uppercase character, getAttribute returns null.
-    //   - returns null when using 'transparent' keyword.
     public static void main(String[] args) {
         StringBuilder result = new StringBuilder("Failed.");
         boolean passed = true;
