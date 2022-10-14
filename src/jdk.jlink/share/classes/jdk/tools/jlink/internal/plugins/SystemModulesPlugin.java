@@ -706,7 +706,7 @@ public final class SystemModulesPlugin extends AbstractPlugin {
 
                     // finish last helper method
                     if (helperMethodCount > 0) {
-                        mv.visitInsn(ARETURN);
+                        mv.visitInsn(RETURN);
                         mv.visitMaxs(0, 0);
                         mv.visitEnd();
                     }
@@ -731,7 +731,7 @@ public final class SystemModulesPlugin extends AbstractPlugin {
 
             // finish last helper method
             // same code as above
-            mv.visitInsn(ARETURN);
+            mv.visitInsn(RETURN);
             mv.visitMaxs(0, 0);
             mv.visitEnd();
 
