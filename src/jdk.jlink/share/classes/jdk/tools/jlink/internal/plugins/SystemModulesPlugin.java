@@ -699,10 +699,14 @@ public final class SystemModulesPlugin extends AbstractPlugin {
             int helperMethodCount = 0;
             final String helperMethodNamePrefix = "moduleDescriptorsSub";
 
+            // Implementation note:
+            // Here the method is "manually split" based on the heuristics that 99 ModuleDescriptors are smaller than 64kb
+            // The other implementation possibility is to use msplit (https://github.com/cretz/msplit). However, this seemed too much effort.
             for (int index = 0; index < moduleInfos.size(); index++) {
-                if (index % 99 == 0) {
-                    // start new child method each 99 module infos
-                    // The number 99 is chosen "randomly" to be below the 64kb limit of a method
+                if (index % 70 == 0) {
+                    // start new child method each 70 module infos
+                    // The number 70 is chosen "randomly" to be below the 64kb limit of a method
+                    // 99 does not work - see https://bugs.openjdk.org/browse/JDK-8246197
 
                     // finish last helper method
                     if (helperMethodCount > 0) {
